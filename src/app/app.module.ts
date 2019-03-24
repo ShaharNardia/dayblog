@@ -3,10 +3,18 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { VacationComponent } from './components/vacation/vacation.component';
+import { VacationListComponent } from './components/vacation-list/vacation-list.component';
+import { HomeComponent } from './pages/home/home.component';
+import { MyboolPipe } from './pipes/mybool.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    VacationComponent,
+    VacationListComponent,
+    HomeComponent,
+    MyboolPipe
   ],
   imports: [
     BrowserModule,
