@@ -1,12 +1,27 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { VacationComponent } from './components/vacation/vacation.component';
 import { VacationListComponent } from './components/vacation-list/vacation-list.component';
+import { VacationComponent } from './components/vacation/vacation.component';
+import { LocationComponent } from './components/location/location.component';
+import { StationComponent } from './components/station/station.component';
+import { FlightComponent } from './components/flight/flight.component';
+import { LoginComponent } from './components/login/login.component';
+import { TodoComponent } from './components/todo/todo.component';
 import { HomeComponent } from './pages/home/home.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyboolPipe } from './pipes/mybool.pipe';
+import { AppComponent } from './app.component';
+import { NgModule } from '@angular/core';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
+import { FormsModule } from '@angular/forms';
+
+
+
+
 
 @NgModule({
   declarations: [
@@ -14,11 +29,21 @@ import { MyboolPipe } from './pipes/mybool.pipe';
     VacationComponent,
     VacationListComponent,
     HomeComponent,
-    MyboolPipe
+    MyboolPipe,
+    FlightComponent,
+    StationComponent,
+    LocationComponent,
+    TodoComponent,
+    LoginComponent,
+    NavbarComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule, FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

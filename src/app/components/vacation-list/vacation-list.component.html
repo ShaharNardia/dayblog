@@ -1,6 +1,12 @@
 <h3>
-  vacation List
+רשימת החופשות שלי
 </h3>
+
+<input style="position: fixed; bottom: 20px; left:20px" type="text" class="btn btn-success" value="חופשה חדשה!" (click)='newVacation()' />
+
 <div *ngFor='let vac of vacations'>
-  <app-vacation vacationId='vac.id'></app-vacation>
+  <a [routerLink]="['/vacation/',vac.id]">
+  {{vac.title}}
+  </a>
+  
 </div>

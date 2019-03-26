@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Vacation } from '../interfaces/vacation';
 import { Flight } from '../interfaces/flight';
 import { toDate } from '@angular/common/src/i18n/format_date';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VacationService {
 
-  dateString = '1968-11-16T00:00:00';
+  dateString = '1968-11-16';
   newDate = new Date(this.dateString);
   vacations: Vacation[] = [
     {
@@ -115,13 +116,19 @@ export class VacationService {
       ]
     }];
 
-  constructor() { }
+  constructor(private firestore: AngularFirestore) { }
 
-  getVacationsList(): Vacation[] {
-    return this.vacations;
+  getVacationsList() {
+    return this.firestore.collection("vacation").get();
   }
 
-  getVacationById(VacationId: string): Vacation {
-    return this.vacations.filter(x => x.id === VacationId)[0];
+  getVacationById(VacationId: string) {
+    return this.firestore.collection("vacation").doc(VacationId).get(); //() .filter(x => x.id === VacationId)[0];
+  }
+
+  
+
+  insertVacation(vacation) {
+      this.firestore.collection('vacation').add(vacation);
   }
 }
