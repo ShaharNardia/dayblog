@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Vacation } from '../../interfaces/vacation'
 import { VacationService } from 'src/app/shared/vacation.service';
 import { Router } from '@angular/router';
+import { FlightService } from 'src/app/shared/flight.service';
 
 
 @Component({
@@ -12,22 +13,34 @@ import { Router } from '@angular/router';
 export class VacationListComponent implements OnInit {
 
   vacations: any[];// = [{ id: '', title: '' }];
-  constructor(private vacationSrv: VacationService, private route: Router) { }
+  constructor(
+    private vacationSrv: VacationService,
+    private flightSrv: FlightService,
+   // private placeSrv: PlacesService,
+     private route: Router) { }
 
-  ngOnInit() {
-
+  getVacationList() {
     this.vacationSrv.getVacationsList().subscribe(querySnapshot => {
-     // this.vacations = querySnapshot.docs;
       let vacationList = [];
       querySnapshot.forEach(function (doc) {
         vacationList.push({ id: doc.id, title: doc.data().title });
       });
       this.vacations = vacationList;
-      console.log(this.vacations);
     })
   }
+  ngOnInit() {
+    this.getVacationList();
+  }
+
   newVacation() {
     this.route.navigate(['/vacation']);
   }
 
+  delete(id) {
+    this.vacationSrv.deleteVacation(id).then(data => {
+     // this.getVacationList();
+      this.flightSrv.deleteFlightsVacation(id)
+
+    });
+  }
 }

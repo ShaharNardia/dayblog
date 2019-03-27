@@ -1,5 +1,5 @@
 import { Todo } from "./todo";
-import { Station } from "./station";
+import { Location } from "./location";
 import { Flight } from "./flight";
 
 export interface Vacation {
@@ -10,6 +10,6 @@ export interface Vacation {
     endDate: Date;
     flights: Flight[];
     toDo:Todo[];
-    station: Station[];
+    location: Location[];
 
 }

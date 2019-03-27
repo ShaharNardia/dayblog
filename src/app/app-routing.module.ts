@@ -4,7 +4,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { VacationComponent } from './components/vacation/vacation.component';
 import { FlightComponent } from './components/flight/flight.component';
 import { LocationComponent } from './components/location/location.component';
-import { StationComponent } from './components/station/station.component';
 import { TodoComponent } from './components/todo/todo.component';
 import { LoginComponent } from './components/login/login.component';
 
@@ -20,14 +19,7 @@ const routes: Routes = [
   { path: 'flight/:id', component: FlightComponent },
 
   { path: 'location', component: LocationComponent },
-  { path: 'location/:id', component: LocationComponent },
-
-  { path: 'station', component: StationComponent },
-  { path: 'station/:id', component: StationComponent },
-
-  { path: 'todo', component: TodoComponent },
-  { path: 'todo/:id', component: TodoComponent },
-
+  { path: 'location/:id', component: LocationComponent }
 ];
 
 @NgModule({

@@ -1,7 +1,6 @@
 import { VacationListComponent } from './components/vacation-list/vacation-list.component';
 import { VacationComponent } from './components/vacation/vacation.component';
 import { LocationComponent } from './components/location/location.component';
-import { StationComponent } from './components/station/station.component';
 import { FlightComponent } from './components/flight/flight.component';
 import { LoginComponent } from './components/login/login.component';
 import { TodoComponent } from './components/todo/todo.component';
@@ -18,6 +17,10 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { FormsModule } from '@angular/forms';
+import { PlacesService } from './shared/location.service';
+import { FlightService } from './shared/flight.service';
+import { VacationService } from './shared/vacation.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -31,7 +34,6 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     MyboolPipe,
     FlightComponent,
-    StationComponent,
     LocationComponent,
     TodoComponent,
     LoginComponent,
@@ -43,9 +45,9 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     NgbModule,
     AngularFireAuthModule,
-    AngularFirestoreModule, FormsModule
+    AngularFirestoreModule, FormsModule, HttpClientModule
   ],
-  providers: [],
+  providers: [PlacesService, FlightService, VacationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,3 +1,151 @@
-<p>
-  flight works!
-</p>
+<input type="button" style="left:20px; position: fixed" class='btn btn-success' value="הוסף נקודות עניין ותחנות לחופשה" (click)='goToAddLocation()' />
+<h1 style="text-align:center; direction: rtl">{{vacationTitle}}</h1>
+
+<!-- <div *ngIf='!isNew' class="custom-control custom-switch">
+    <input type="checkbox" class="custom-control-input" [(ngModel)]='isEditMode' id="switch1">
+    <label class="custom-control-label" for="switch1">ערוך</label>
+  </div> -->
+
+<!-- <div *ngFor='let flight of flights'> -->
+
+  
+<form #form="ngForm" (ngSubmit)='submit()'>
+  <table style="width:100%; direction: rtl">
+    <thead>
+      <th>
+        המראה מ -
+      </th>
+      <th>
+        נחיתה ב -
+      </th>
+      <th>
+        שדה תעופה -
+      </th>
+      <th>
+        חברת תעופה -
+      </th>
+
+      <th>
+        מספר טיסה -
+      </th>
+      <th>
+        תאריך נחיתה בו -
+      </th>
+      <th>
+        תאריך המראה ממנו -
+      </th>
+      <th>
+        <a (click)='newNotEdit()'>X(נקה)</a>
+      </th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <input type="text" [(ngModel)]='flight.from' name='flightFrom'>
+        </td>
+        <td>
+          <input type="text" [(ngModel)]='flight.to' name='flightTo'>
+        </td>
+        <td>
+          <input type="text" name='flightAirport' [(ngModel)]='flight.airport'>
+        </td>
+        <td>
+          <input type="text" name='flightCompany' [(ngModel)]='flight.company'>
+        </td>
+        <td>
+          <input type="text" name='flightNumber' [(ngModel)]='flight.flightNumber'>
+        </td>
+
+        <td>
+          <input type="date" name='flightArrivalDate' [ngModel]="flight.arrivalDate | date:'yyyy-MM-dd'"
+            (ngModelChange)="flight.arrivalDate = $event">
+
+        </td>
+        <td>
+          <input type="date" name='flightDepartureDate' [ngModel]="flight.departureDate | date:'yyyy-MM-dd'"
+            (ngModelChange)="flight.departureDate = $event">
+        </td>
+        <td>
+          <input type="submit" class="btn btn-success" [value]="isEdit? 'ערוך' : 'הכנס' ">
+        </td>
+      </tr>
+      <tr style="background-color:burlywood">
+        <td colspan="8">
+          <input style="width: 99%;
+            height: 80px;
+            margin: 0.5% 0.5%;" type="text" name='flightNotes'
+            placeholder="כתבו כאן הערות/הכנות וכו' לגבי הטיסה הזו..." [(ngModel)]='flight.notes'>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+<hr style="width:100%;  margin:20px auto" />
+
+
+<div *ngFor='let flight of flights'>
+  <div style="border-radius: 2%; padding: 5px 5px; background-color:green; margin-bottom: 5px"> <b> {{flight.to}} >>>>>>
+        {{flight.from}}</b> </div> <table style="width:90%; direction: rtl">
+        <thead>
+          <th>
+            המראה מ -
+          </th>
+          <th>
+            נחיתה ב -
+          </th>
+          <th>
+            שדה תעופה -
+          </th>
+          <th>
+            חברת תעופה -
+          </th>
+
+          <th>
+            מספר טיסה -
+          </th>
+          <th>
+            תאריך נחיתה בו -
+          </th>
+          <th>
+            תאריך המראה ממנו -
+          </th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              {{flight.from}}
+            </td>
+            <td>
+              {{flight.to}}
+            </td>
+            <td>
+              {{flight.airport}}
+            </td>
+            <td>
+              {{flight.company}}
+            </td>
+            <td>
+              {{flight.flightNumber}}
+            </td>
+            <td>
+              {{flight.arrivalDate}}
+            </td>
+            <td>
+              {{flight.departureDate}}
+            </td>
+            <td>
+              <input type="button" (click)='editFlight(this.flight.id)' class="btn btn-primary" value="ערוך">
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="5" style="background-color:burlywood">
+              {{flight.notes}}
+            </td>
+            <td></td><td></td>
+          </tr>
+        </tbody>
+        </table>
+        <hr style="width:100%;  margin:20px auto" />
+  </div>

@@ -2,7 +2,8 @@ import { Todo } from "./todo";
 
 export interface Flight {
 
-    id: string;
+    id?: string;
+    vacationId?: string;
     flightNumber: string;
     company: string;
     from:string;
@@ -11,5 +12,5 @@ export interface Flight {
     departureDate?: Date;
     arrivalDate?: Date;
     notes: string;
-    todo: Todo[];
+    todo?: Todo[];
 }

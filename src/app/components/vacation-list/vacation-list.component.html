@@ -1,12 +1,13 @@
+<input style=" position: fixed;left:20px" type="text" class="btn btn-success" value="!חופשה חדשה" (click)='newVacation()' />
 <h3>
 רשימת החופשות שלי
 </h3>
 
-<input style="position: fixed; bottom: 20px; left:20px" type="text" class="btn btn-success" value="חופשה חדשה!" (click)='newVacation()' />
 
-<div *ngFor='let vac of vacations'>
+
+<div *ngFor='let vac of vacations' style="margin:20px 0">
   <a [routerLink]="['/vacation/',vac.id]">
   {{vac.title}}
   </a>
-  
+<input type="button" class='btn btn-danger' value="מחק" (click)='delete(vac.id)' />  
 </div>
