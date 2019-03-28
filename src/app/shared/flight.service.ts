@@ -30,7 +30,7 @@ export class FlightService {
   deleteFlightsVacation(vacId) {
     return this.fs.collection('flight', ref => ref.where('vacationId', '==', vacId)).get().subscribe(data => {
       data.forEach(doc => {
-        this.fs.doc(doc.id).delete();
+        this.fs.collection('flight').doc(doc.id).delete();
       })
     });
   }

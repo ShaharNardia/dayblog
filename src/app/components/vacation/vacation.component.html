@@ -5,9 +5,9 @@
   </div>
   <div>
     <input type="button" class='btn btn-success' (click)='goToAddFlights()'
-      style="float: left; width: fit-content; margin-left:20px" value="הוסף טיסות לחופשה" />
+      style="float: left; width: fit-content; margin-left:20px" value="הוסף/ערוך טיסות לחופשה" />
     <input type="button" class='btn btn-primary' (click)='goToAddLocation()'
-      style="float: left; width: fit-content; margin-left:20px" value="הוסף נקודות עניין ותחנות לחופשה" />
+      style="float: left; width: fit-content; margin-left:20px" value="הוסף/ערוך נקודות עניין ותחנות לחופשה" />
   </div>
   <form #form="ngForm" (ngSubmit)="submit()">
     <div style="width:70%; margin: 0 auto; direction: rtl">
@@ -16,7 +16,7 @@
       </h3>
       <input type="text" placeholder="כותרת החופשה" name='vactitle' *ngIf='isEditMode' style="width:80%"
         [(ngModel)]='vacation.title'>
-      <br>
+      <br />
       <div style="clear: both; display: block">
         <div style="float:right; margin-left: 50px">
           <div>תחילת הטיול</div>
@@ -32,177 +32,162 @@
               (ngModelChange)="vacation.endDate = $event"></div>
         </div>
       </div>
-      <br><br><br>
-      <div style="clear: both; display: block" *ngIf='!isEditMode'>
-        <h3 style="cursor: pointer;" (click)='flightShow = !this.flightShow'>
-          טיסות -
-        </h3>
-        <ul>
-          <li *ngFor='let flight of flights'>
-            <div> <b> {{flight.to}} >>>>>> {{flight.from}}</b> </div>
-            <div *ngIf='flightShow'>
-              <table style="width:80%">
-                <thead>
-                  <th>
-                    שדה תעופה
-                  </th>
-                  <th>
-                    חברת תעופה
-                  </th>
-
-                  <th>
-                    מספר טיסה
-                  </th>
-                  <th>
-                    תאריך נחיתה בו
-                  </th>
-                  <th>
-                    תאריך המראה ממנו
-                  </th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      {{flight.airport}}
-                    </td>
-                    <td>
-                      {{flight.company}}
-                    </td>
-                    <td>
-                      {{flight.flightNumber}}
-                    </td>
-                    <td>
-                      {{flight.arrivalDate | date:"dd/MM/yyyy hh:mm:ss"}}
-                    </td>
-                    <td>
-                      {{flight.departureDate | date:"dd/MM/yyyy hh:mm:ss"}}
-                    </td>
-                  </tr>
-                  <tr style="background-color:burlywood">
-                    <td colspan="5">
-                      {{flight.notes}}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="5">
-                      משימות לקראת הטיסה -
-                      <ul *ngFor='let todo of flight.todo'>
-                        <li>
-                          <div> אחראי לביצוע -
-                            <b>
-                              {{todo.userIncharge}}
-                            </b>
-                          </div>
-                          <div> כותרת המשימה -
-                            <b>
-                              {{todo.title}}
-                            </b>
-                          </div>
-                          <div>
-                            המשימה -
-                            <b> {{todo.content}} </b></div>
-                          <div>
-                            האם בוצע ? - <b>{{todo.done | mybool}}</b>
-                          </div>
-                        </li>
-                      </ul>
-
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-
-            </div>
-            <hr style="width:100%;  margin:20px auto" />
-          </li>
-        </ul>
-
-        <h3 style="cursor: pointer;" (click)='stationShow = !this.stationShow'>
-          תחנות -
-        </h3>
-        <ul>
-          <li *ngFor='let stat of vacation.station'>
-            <div> <b> {{stat.title}} </b> </div>
-            <div *ngIf='stationShow'>
-              <table style="width:80%">
-                <thead>
-                  <th>
-                    שהייה מתאריך
-                  </th>
-                  <th>
-                    עד מתאריך
-                  </th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      {{stat.startDate | date}}
-                    </td>
-                    <td>
-                      {{stat.endDate | date}}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">
-                      {{stat.todo}}
-                    </td>
-                  </tr>
-                  <tr style="background-color:burlywood">
-                    <td colspan="2">
-                      דברים שחשוב לעשות ב{{stat.title}}
-                      <ul *ngFor='let todo of stat.toDo'>
-                        <li style="margin:10px auto">
-                          <div> אחראי לביצוע -
-                            <b>
-                              {{todo.userIncharge}}
-                            </b>
-                          </div>
-                          <div> כותרת המשימה -
-                            <b>
-                              {{todo.title}}
-                            </b>
-                          </div>
-                          <div>
-                            המשימה -
-                            <b> {{todo.content}} </b></div>
-                          <div>
-                            האם בוצע ? - <b>{{todo.done | mybool}}</b>
-                          </div>
-                        </li>
-                      </ul>
-
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <ul *ngFor='let loc of stat.location'>
-                <li>
-                  {{loc.id}}
-                  <br />
-                  {{loc.name}}
-                  <br />
-                  {{loc.link}}
-                  <br />
-                  {{loc.myGrade}}
-                  <br />
-                  {{loc.notes}}
-                  <br />
-                  {{loc.startDate | date:"dd/MM/yyyy"}}
-                  <br />
-                  {{loc.endDate | date:"dd/MM/yyyy"}}
-                  <br />
-                  {{loc.type}}
-                  <br />
-                  {{loc.visited | mybool}}
-                </li>
-              </ul>
-            </div>
-            <hr style="width:100%;  margin:20px auto" />
-          </li>
-        </ul>
+      <br><br>
+      <div *ngIf='!formIsValid' style="color:red; text-align: center; font-weight: bolder">
+        יש להזין את כל פרטי החופשה
       </div>
+      <br>
+      <input style="width: 30%; margin: 0 35%;" class="btn btn-primary" *ngIf='isEditMode' type="submit"
+        [value]="!isNew? 'עדכן' : 'הכנס'">
     </div>
-    <input style="width: 30%; margin: 0 35%;" class="btn btn-primary" *ngIf='isEditMode' type="submit"
-      [value]="!isNew? 'עדכן' : 'הכנס'">
   </form>
+
+  <div style="clear: both; display: block" *ngIf='!isEditMode'>
+    <h3 style="cursor: pointer;" (click)='flightShow = !this.flightShow'>
+      טיסות -
+    </h3>
+    <ul>
+      <li *ngFor='let flight of flights'>
+        <div> <b> {{flight.to}} >>>>>> {{flight.from}}</b> </div>
+        <div *ngIf='flightShow'>
+          <table style="width:80%">
+            <thead>
+              <th>
+                שדה תעופה
+              </th>
+              <th>
+                חברת תעופה
+              </th>
+
+              <th>
+                מספר טיסה
+              </th>
+              <th>
+                תאריך נחיתה בו
+              </th>
+              <th>
+                תאריך המראה ממנו
+              </th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {{flight.airport}}
+                </td>
+                <td>
+                  {{flight.company}}
+                </td>
+                <td>
+                  {{flight.flightNumber}}
+                </td>
+                <td>
+                  {{flight.arrivalDate | date:"dd/MM/yyyy hh:mm:ss"}}
+                </td>
+                <td>
+                  {{flight.departureDate | date:"dd/MM/yyyy hh:mm:ss"}}
+                </td>
+              </tr>
+              <tr style="background-color:burlywood">
+                <td colspan="5">
+                  {{flight.notes}}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="5">
+                  משימות לקראת הטיסה -
+                  <ul *ngFor='let todo of flight.todo'>
+                    <li>
+                      <div> אחראי לביצוע -
+                        <b>
+                          {{todo.userIncharge}}
+                        </b>
+                      </div>
+                      <div> כותרת המשימה -
+                        <b>
+                          {{todo.title}}
+                        </b>
+                      </div>
+                      <div>
+                        המשימה -
+                        <b> {{todo.content}} </b></div>
+                      <div>
+                        האם בוצע ? - <b>{{todo.done | mybool}}</b>
+                      </div>
+                    </li>
+                  </ul>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+        <hr style="width:100%;  margin:20px auto" />
+      </li>
+    </ul>
+
+    <h3 style="cursor: pointer;" (click)='stationShow = !this.stationShow'>
+      תחנות -
+    </h3>
+    <ul>
+      <li *ngFor='let location of locations'>
+        <div> <b> {{location.name}} </b> </div>
+        <div *ngIf='stationShow'>
+          <table style="width:80%; direction: rtl">
+            <thead>
+              <th>
+                סוג 
+              </th>
+              <th>
+                קישור
+               </th>
+              <th>
+                התחלה
+              </th>
+              <th>
+                סיום
+              </th>
+              <th>
+                היינו
+              </th>
+              <th>
+                ציון(1-10)
+              </th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {{location.type}}
+                </td>
+                <td>
+                  <a target="_blank" [href]='location.link'>קישור יעיל</a>
+                </td>
+                <td>
+                  {{location.startDate | date : 'short'}}
+                </td>
+                <td>
+                  {{location.endDate | date : 'short'}}
+                </td>
+                <td><input type="checkbox" disabled [value]="location.visited"></td>
+                <td>
+                  {{location.myGrade}}
+                </td>
+              </tr>
+              <tr style="background-color:burlywood">
+                <td colspan="6">
+                  {{location.notes}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr style="width:100%;  margin:20px auto" />
+      </li>
+    </ul>
+
+
+
+
+
+  </div>
 </div>

@@ -16,8 +16,8 @@ export class VacationListComponent implements OnInit {
   constructor(
     private vacationSrv: VacationService,
     private flightSrv: FlightService,
-   // private placeSrv: PlacesService,
-     private route: Router) { }
+    // private placeSrv: PlacesService,
+    private route: Router) { }
 
   getVacationList() {
     this.vacationSrv.getVacationsList().subscribe(querySnapshot => {
@@ -38,9 +38,8 @@ export class VacationListComponent implements OnInit {
 
   delete(id) {
     this.vacationSrv.deleteVacation(id).then(data => {
-     // this.getVacationList();
-      this.flightSrv.deleteFlightsVacation(id)
-
+      this.flightSrv.deleteFlightsVacation(id);
+      this.getVacationList();
     });
   }
 }

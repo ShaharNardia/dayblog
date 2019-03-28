@@ -1,4 +1,5 @@
-<input type="button" style="left:20px; position: fixed" class='btn btn-success' value="הוסף נקודות עניין ותחנות לחופשה" (click)='goToAddLocation()' />
+<input type="button" style="left:20px; position: fixed" class='btn btn-success' value="הוסף/ערוך נקודות עניין ותחנות לחופשה"
+  (click)='goToAddLocation()' />
 <h1 style="text-align:center; direction: rtl">{{vacationTitle}}</h1>
 
 <!-- <div *ngIf='!isNew' class="custom-control custom-switch">
@@ -8,7 +9,7 @@
 
 <!-- <div *ngFor='let flight of flights'> -->
 
-  
+
 <form #form="ngForm" (ngSubmit)='submit()'>
   <table style="width:100%; direction: rtl">
     <thead>
@@ -29,10 +30,7 @@
         מספר טיסה -
       </th>
       <th>
-        תאריך נחיתה בו -
-      </th>
-      <th>
-        תאריך המראה ממנו -
+        תאריך המראה  -
       </th>
       <th>
         <a (click)='newNotEdit()'>X(נקה)</a>
@@ -56,11 +54,11 @@
           <input type="text" name='flightNumber' [(ngModel)]='flight.flightNumber'>
         </td>
 
-        <td>
+        <!-- <td>
           <input type="date" name='flightArrivalDate' [ngModel]="flight.arrivalDate | date:'yyyy-MM-dd'"
             (ngModelChange)="flight.arrivalDate = $event">
 
-        </td>
+        </td> -->
         <td>
           <input type="date" name='flightDepartureDate' [ngModel]="flight.departureDate | date:'yyyy-MM-dd'"
             (ngModelChange)="flight.departureDate = $event">
@@ -77,6 +75,13 @@
             placeholder="כתבו כאן הערות/הכנות וכו' לגבי הטיסה הזו..." [(ngModel)]='flight.notes'>
         </td>
       </tr>
+      <tr>
+          <td colspan="8" style="text-align: center; font-weight: bolder">
+          <div *ngIf='!formIsValid' style="color:red">
+            יש להזין את כל פרטי הטיסה
+          </div>
+        </td>
+      </tr>
     </tbody>
   </table>
 </form>
@@ -85,67 +90,69 @@
 
 <div *ngFor='let flight of flights'>
   <div style="border-radius: 2%; padding: 5px 5px; background-color:green; margin-bottom: 5px"> <b> {{flight.to}} >>>>>>
-        {{flight.from}}</b> </div> <table style="width:90%; direction: rtl">
-        <thead>
-          <th>
-            המראה מ -
-          </th>
-          <th>
-            נחיתה ב -
-          </th>
-          <th>
-            שדה תעופה -
-          </th>
-          <th>
-            חברת תעופה -
-          </th>
+      {{flight.from}}</b> </div>
+  <table style="width:90%; direction: rtl">
+    <thead>
+      <th>
+        המראה מ -
+      </th>
+      <th>
+        נחיתה ב -
+      </th>
+      <th>
+        שדה תעופה -
+      </th>
+      <th>
+        חברת תעופה -
+      </th>
 
-          <th>
-            מספר טיסה -
-          </th>
-          <th>
-            תאריך נחיתה בו -
-          </th>
-          <th>
-            תאריך המראה ממנו -
-          </th>
-          <th></th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              {{flight.from}}
-            </td>
-            <td>
-              {{flight.to}}
-            </td>
-            <td>
-              {{flight.airport}}
-            </td>
-            <td>
-              {{flight.company}}
-            </td>
-            <td>
-              {{flight.flightNumber}}
-            </td>
-            <td>
-              {{flight.arrivalDate}}
-            </td>
-            <td>
-              {{flight.departureDate}}
-            </td>
-            <td>
-              <input type="button" (click)='editFlight(this.flight.id)' class="btn btn-primary" value="ערוך">
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td colspan="5" style="background-color:burlywood">
-              {{flight.notes}}
-            </td>
-            <td></td><td></td>
-          </tr>
-        </tbody>
-        </table>
-        <hr style="width:100%;  margin:20px auto" />
-  </div>
+      <th>
+        מספר טיסה -
+      </th>
+      <th>
+        תאריך נחיתה בו -
+      </th>
+      <th>
+        תאריך המראה ממנו -
+      </th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          {{flight.from}}
+        </td>
+        <td>
+          {{flight.to}}
+        </td>
+        <td>
+          {{flight.airport}}
+        </td>
+        <td>
+          {{flight.company}}
+        </td>
+        <td>
+          {{flight.flightNumber}}
+        </td>
+        <td>
+          {{flight.arrivalDate}}
+        </td>
+        <td>
+          {{flight.departureDate}}
+        </td>
+        <td>
+          <input type="button" (click)='editFlight(this.flight.id)' class="btn btn-primary" value="ערוך">
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="5" style="background-color:burlywood">
+          {{flight.notes}}
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <hr style="width:100%;  margin:20px auto" />
+</div>

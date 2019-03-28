@@ -4,6 +4,7 @@ import { VacationService } from 'src/app/shared/vacation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Flight } from 'src/app/interfaces/flight';
 import { FlightService } from 'src/app/shared/flight.service';
+import { LocationService } from 'src/app/shared/location.service';
 
 @Component({
   selector: 'app-vacation',
@@ -19,9 +20,15 @@ export class VacationComponent implements OnInit {
   //vacation: Vacation = { toDo: [], title: '', flights: [], id: '', userId: [], station: [], startDate: this.mydate, endDate: this.mydate };
   vacation: any = { title: '', userId: '', startDate: this.mydate, endDate: this.mydate };
   flights: Flight[] = [];
+  locations: Location[] = [];
   flightShow: boolean = false;
   stationShow: boolean = false;
-  constructor(private vacationSvc: VacationService, private flightSvc: FlightService, private activatedRoute: ActivatedRoute, private route: Router, private zone: NgZone) {
+  formIsValid: boolean = true;
+  constructor(private vacationSvc: VacationService,
+    private flightSvc: FlightService,
+    private locationSvc: LocationService,
+    private activatedRoute: ActivatedRoute,
+    private route: Router, private zone: NgZone) {
   }
 
 
@@ -38,6 +45,15 @@ export class VacationComponent implements OnInit {
           })
           this.flights = tempArr;
         });
+        this.locationSvc.getLocationByVacationId(this.vacId).subscribe(data => {
+          let tempArr = [];
+          data.forEach(doc => {
+            console.log(doc.data());
+            tempArr.push(doc.data());
+          })
+          this.locations = tempArr;
+        })
+
       });
     }
     else {
@@ -47,16 +63,37 @@ export class VacationComponent implements OnInit {
 
   }
 
-  submit() {
-    if (this.isNew) {
-      this.vacationSvc.insertVacation(this.vacation).then(docRef => {
-        this.zone.run(() => this.route.navigate(['/flight', docRef.id]));
-      });
+  checkIfValid(): boolean {
+    if (
+      this.vacation.endDate !== undefined &&
+      this.vacation.startDate !== '' &&
+      this.vacation.title !== ''
+    ) {
+      this.formIsValid = true;
     }
     else {
-      this.vacationSvc.updateVacation(this.vacId, this.vacation).then(docRef => {
-        this.goToAddFlights();
-      });
+      this.formIsValid = false;
+    }
+
+    return this.formIsValid;
+  }
+
+
+  submit() {
+    if (this.formIsValid) {
+      if (this.isNew) {
+        this.vacationSvc.insertVacation(this.vacation).then(docRef => {
+          this.zone.run(() => this.route.navigate(['/flight', docRef.id]));
+        });
+      }
+      else {
+        this.vacationSvc.updateVacation(this.vacId, this.vacation).then(docRef => {
+          this.goToAddFlights();
+        });
+      }
+    }
+    else {
+
     }
   }
 

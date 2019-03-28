@@ -13,6 +13,7 @@ export class FlightComponent implements OnInit {
 
   vacationTitle: string = '';
   vacationId: string = '';
+  formIsValid: boolean = true;
   flightId: string = '';
   flights: Flight[] = [];// [{ to: '', from: '', airport: '', notes: '', id: '', company: '', flightNumber: '' }];
   flight: Flight = { vacationId: '', to: '', from: '', airport: '', notes: '', id: '', company: '', flightNumber: '' };
@@ -30,25 +31,48 @@ export class FlightComponent implements OnInit {
     })
   }
 
-  submit() {
-    this.flight.vacationId = this.vacationId;
-
-    if (!this.isEdit) {
-      this.flightSvc.insertFlight(this.flight).then(data => {
-        this.getFlightsList();
-      });
+  checkIfValid(): boolean {
+    if (
+      this.flight.departureDate !== undefined &&
+      this.flight.airport !== '' &&
+      this.flight.company !== '' &&
+      this.flight.from !== '' &&
+      this.flight.to !== '' &&
+      this.flight.flightNumber !== ''
+    ) {
+      this.formIsValid = true;
     }
     else {
-      this.flightSvc.updateFlight(this.flightId, this.flight).then(data => {
-        this.getFlightsList();
-      });
+      this.formIsValid = false;
     }
 
-    this.resetFields();
+    return this.formIsValid;
+  }
+  submit() {
+    if (this.checkIfValid()) {
+      this.flight.vacationId = this.vacationId;
+
+      if (!this.isEdit) {
+        this.flightSvc.insertFlight(this.flight).then(data => {
+          this.getFlightsList();
+        });
+      }
+      else {
+        this.flightSvc.updateFlight(this.flightId, this.flight).then(data => {
+          this.getFlightsList();
+        });
+      }
+
+      this.resetFields();
+    }
+    else {
+
+    }
   }
   resetFields() {
     this.flight = { vacationId: '', to: '', from: '', airport: '', notes: '', id: '', company: '', flightNumber: '' };
     this.flightId = '';
+    this.isEdit = false;
   }
 
   editFlight(flightId) {
@@ -56,22 +80,18 @@ export class FlightComponent implements OnInit {
     this.flightId = flightId;
     this.flightSvc.getFlightsbyId(flightId).subscribe(data => {
       this.flight = <Flight>data.data();
-      //console.log(data.data());
     })
   }
 
-  goToAddLocation(){
-    this.router.navigate(['/location',this.vacationId])
+  goToAddLocation() {
+    this.router.navigate(['/location', this.vacationId])
   }
 
   getFlightsList() {
     this.flightSvc.getFlightsByVacId(this.vacationId).get().subscribe(data => {
-      console.log(data);
       let tempFlightArr = [];
       data.forEach(doc => {
-        console.log(doc.data());
         let obj = { ...doc.data(), id: doc.id };
-        
         tempFlightArr.push(obj);
       })
       this.flights.length = 0;

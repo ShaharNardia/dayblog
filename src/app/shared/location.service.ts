@@ -6,7 +6,7 @@ import { AngularFirestore } from '@angular/fire/firestore'
 @Injectable({
   providedIn: 'root'
 })
-export class PlacesService {
+export class LocationService {
 
   apikey = 'AIzaSyDkfnnIu4juiYqftVzL4lawbBoTvFuA7DY';
   constructor(private http: HttpClient, private afs: AngularFirestore) { }
@@ -25,19 +25,23 @@ export class PlacesService {
   }
 
 
-  insertPlace(place) {
-    return this.afs.collection('place').add(place);
+  insertLocation(location) {
+    return this.afs.collection('location').add(location);
   }
 
-  getPlaceByVacationId(vacId) {
-    return this.afs.collection('place', ref => ref.where('vacationId', '==', vacId)).get();
+  getLocationByVacationId(vacId) {
+    return this.afs.collection('location', ref => ref.where('vacationId', '==', vacId)).get();
   }
 
-  updatePlace(id, place) {
-    return this.afs.collection('place').doc(id).set(place);
+  getLocationById(id){
+    return this.afs.collection('location').doc(id).get();
   }
 
-  deletePlace(id){
-    return this.afs.collection('place').doc(id).delete();
+  updateLocation(id, place) {
+    return this.afs.collection('location').doc(id).set(place);
+  }
+
+  deleteLocation(id){
+    return this.afs.collection('location').doc(id).delete();
   }
 }

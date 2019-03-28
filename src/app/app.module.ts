@@ -17,10 +17,12 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { FormsModule } from '@angular/forms';
-import { PlacesService } from './shared/location.service';
+import { LocationService } from './shared/location.service';
 import { FlightService } from './shared/flight.service';
 import { VacationService } from './shared/vacation.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 
@@ -45,9 +47,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     NgbModule,
     AngularFireAuthModule,
-    AngularFirestoreModule, FormsModule, HttpClientModule
+    AngularFirestoreModule, FormsModule, HttpClientModule, ReactiveFormsModule
   ],
-  providers: [PlacesService, FlightService, VacationService],
+  providers: [LocationService, FlightService, VacationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
