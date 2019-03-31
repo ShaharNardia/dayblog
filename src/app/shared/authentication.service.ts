@@ -1,32 +1,34 @@
 import { Injectable } from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {AngularFirestore} from '@angular/fire/firestore';
-import {AngularFireAuth} from '@angular/fire/auth';
-import {Router} from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
   authState: any = null;
+  loggedInUser: any = { user: { displayName: '', photoURL: '', uid: '' } };
 
-  constructor(private afAuth: AngularFireAuth,
-              private afs: AngularFirestore,
-              private router: Router) {
-
-    this.afAuth.authState.subscribe((auth) => {
+  constructor(
+    private afAuth: AngularFireAuth,
+    private afs: AngularFirestore,
+    private router: Router
+  ) {
+    this.afAuth.authState.subscribe(auth => {
       this.authState = auth;
     });
   }
 
   /*
-  * Email / password Auth
-  * */
-  emailSignUp(email:  string, password: string) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then((user) => {
+   * Email / password Auth
+   * */
+  emailSignUp(email: string, password: string) {
+    return this.afAuth.auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(user => {
         this.authState = user;
       })
       .catch(error => {
@@ -35,12 +37,12 @@ export class AuthenticationService {
   }
 
   emailLogin(email: string, password: string) {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((res) => {
+    return this.afAuth.auth
+      .signInWithEmailAndPassword(email, password)
+      .then(res => {
         this.authState = res.user;
       });
   }
-
 
   /*Google login*/
   googleLogin() {
@@ -55,13 +57,14 @@ export class AuthenticationService {
   }
 
   private socialSignIn(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-      .then((credential) =>  {
+    return this.afAuth.auth
+      .signInWithPopup(provider)
+      .then(credential => {
         this.authState = credential.user;
+        this.loggedInUser = credential;
       })
       .catch(error => console.log(error));
   }
-
 
   /*Sign out*/
 
@@ -89,9 +92,7 @@ export class AuthenticationService {
   get currentUserId(): string {
     return this.authenticated ? this.authState.uid : '';
   }
-
 }
-
 
 export class EmailValidator {
   static isValid(control: FormControl) {
@@ -100,7 +101,7 @@ export class EmailValidator {
     if (valid) {
       return null;
     }
-    return {'invalidEmail': true};
+    return { invalidEmail: true };
   }
 }
 
@@ -112,7 +113,7 @@ export class PasswordValidator {
       return null;
     }
     return {
-      'invalidPassword': true
+      invalidPassword: true
     };
   }
 }

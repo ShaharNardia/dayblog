@@ -15,7 +15,9 @@ export class LoginComponent implements OnInit {
     this.authenticate.signOut();
   }
   fbLogin() {
-    this.authenticate.facebookLogin();
+    this.authenticate.facebookLogin().then((res) => {
+      this.zone.run(() => this.route.navigate(['/home']));
+    });
 
   }
 

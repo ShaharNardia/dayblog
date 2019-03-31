@@ -7,20 +7,12 @@ import { AuthenticationService } from 'src/app/shared/authentication.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  user: any = { photoUrl: '', displayName: '' };
-  constructor(private authenticate: AuthenticationService) { }
+  user: any = {};
+  constructor(private authenticate: AuthenticationService) {}
 
   ngOnInit() {
-
-  }
-
-  ngOnChanges() {
-    console.log('change');
-    if (this.authenticate.authenticated) {
-      console.log(this.authenticate.currentUser);
-      this.user = this.authenticate.currentUser;
-    }
+    this.user = this.authenticate.loggedInUser;
+    console.log(this.user.user.displayName);
   }
 
 }
